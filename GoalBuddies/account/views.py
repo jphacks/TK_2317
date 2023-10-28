@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect
+from django.urls import reverse_lazy
 
 def home(request):
     return render(request, 'home.html')
@@ -36,5 +37,6 @@ def signup_view(request):
         form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
 
-def profile_view(request):
-    return render(request, 'profile.html')
+class CustomLoginView(LoginView):
+    def get_success_url(self):
+        return reverse_lazy('account')
