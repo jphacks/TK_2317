@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-83)8u-f*er)=tsxuh)*-_y)cargfb0dc-m%=s4mdcsvof1sl*+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['kajiyai.pythonanywhere.com']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "account",
+    "MakeTask",
 ]
 
 MIDDLEWARE = [
