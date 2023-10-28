@@ -1,7 +1,8 @@
 from django.db import models
 from model_utils.models import TimeStampedModel
 from account.models import User
-from task.models import Task, Tag
+from django.contrib.auth.models import User
+from MakeTask.models import Task, Tag
 
 class Message(TimeStampedModel):
     content = models.TextField()
