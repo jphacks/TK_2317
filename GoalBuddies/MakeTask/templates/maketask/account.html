@@ -5,7 +5,15 @@
 </head>
 <body>
     <h1>Welcome, {{ request.user.username }}</h1>
-    <p>This is your account page.</p>
-    <a href="{% url 'logout' %}">Logout</a>
+    <a href="{% url 'mtask' %}">Create New Task</a>
+    <h2>Your Tasks</h2>
+    <ul>
+        {% for task in tasks %}
+        <li>{{ task.name }} - 
+            <a href="{% url 'edit_task' task.id %}">Edit</a> |
+            <a href="{% url 'remove_task' task.id %}">Remove</a>
+        </li>
+        {% endfor %}
+    </ul>
 </body>
 </html>
