@@ -2,19 +2,77 @@
 <html>
 <head>
     <title>{{ request.user.username }}'s Account</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .header {
+            background-color: rgb(110, 103, 103);
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logout-button {
+            background-color: #000;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .task-list {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            list-style-type: none;
+            border: 1px solid #ddd;
+        }
+        .task-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+        }
+        .task-list li:last-child {
+            border-bottom: none;
+        }
+        .create-button {
+            display: block;
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            text-align: center;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 20px auto;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome, {{ request.user.username }}</h1>
-    <a href="{% url 'mtask' %}">Create New Task</a>
-    <h2>Your Tasks</h2>
-    <ul>
+    <div class="header">
+        <h1>My Page</h1>
+        <a class="logout-button" href="{% url 'logout' %}">ログアウト</a>
+    </div>
+    <a class="create-button" href="{% url 'mtask' %}">Create New</a>
+    <h2>{{ request.user.username }}'s Tasks</h2>
+    <ul class="task-list">
         {% for task in tasks %}
-        <li>{{ task.name }} - 
-            <a href="{% url 'edit_task' task.id %}">Edit</a> |
-            <a href="{% url 'remove_task' task.id %}">Remove</a>
+        <li>
+            <span>{{ task.name }}</span>
+            <div>
+                <a href="{% url 'edit_task' task.id %}">Edit</a> |
+                <a href="{% url 'remove_task' task.id %}">Remove</a>
+            </div>
         </li>
         {% endfor %}
     </ul>
-    <a href="{% url 'logout' %}">Logout</a>
 </body>
 </html>

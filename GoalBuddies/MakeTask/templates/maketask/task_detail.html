@@ -1,0 +1,33 @@
+<!-- このファイルは新しく作成する必要があります -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task Detail</title>
+    <!-- スタイルとヘッダー情報 -->
+</head>
+<body>
+    <h1>{{ task.name }}</h1>
+    <p>{{ task.detail }}</p>
+    
+    <!-- 投稿フォーム -->
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">投稿</button>
+    </form>
+
+    <!-- 投稿リスト -->
+    <ul>
+        {% for post in posts %}
+        <li>
+            <strong>{{ post.user.username }}</strong> ({{ post.posted_at }}): {{ post.content }}
+            <form method="post" action="{% url 'like_post' post.id %}">
+                {% csrf_token %}
+                <button type="submit">いいね</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>

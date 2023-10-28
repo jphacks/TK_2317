@@ -1,14 +1,76 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Edit Task</title>
+    <title>Create Task</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        header {
+            background-color: #333;  /* 黒背景に変更 */
+            color: white;  /* 白文字に変更 */
+            padding: 20px 10px;
+            text-align: center;
+            border-bottom: 2px solid #ddd;
+            margin-bottom: 30px;
+        }
+
+        input[type="text"], input[type="password"], textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            float: right;  /* ボタンを右側に配置 */
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        .task-form {
+            overflow: auto;  /* ボタンのfloatスタイルによるレイアウトの崩れを防ぐ */
+        }
+    </style>
 </head>
 <body>
-    <h1>Edit Task</h1>
-    <form method="post">
+    <header>
+        <h1>タスク編集</h1>
+    </header>
+    
+    <form method="post" class="task-form">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Save Changes</button>
+        
+        <label for="{{ form.name.id_for_label }}">タスク名</label>
+        {{ form.name }}
+
+        <label for="{{ form.detail.id_for_label }}">内容</label>
+        {{ form.detail }}
+
+        <label for="{{ form.duration.id_for_label }}">予定期間</label>
+        {{ form.duration }}
+
+        <label for="{{ form.tags.id_for_label }}">タグ</label>
+        {{ form.tags }}
+        
+        <button type="submit">保存</button>
     </form>
 </body>
 </html>

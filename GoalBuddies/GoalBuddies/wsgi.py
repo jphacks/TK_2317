@@ -1,5 +1,8 @@
 import os
 import sys
+from django.core.wsgi import get_wsgi_application
+
+application = get_wsgi_application()
 
 path = '/home/kajiyai/kajiyai.pythonanywhere.com/GoalBuddies'  # 例: '/home/kajiyai/GoalBuddies'
 if path not in sys.path:
