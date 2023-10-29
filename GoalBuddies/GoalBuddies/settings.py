@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-83)8u-f*er)=tsxuh)*-_y)cargfb0dc-m%=s4mdcsvof1sl*+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['kajiyai.pythonanywhere.com']
+ALLOWED_HOSTS = ['kajiyai.pythonanywhere.com','127.0.0.1']
 
 
 # Application definition
@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "account",
     "MakeTask",
-    "match",
 ]
 
 MIDDLEWARE = [
@@ -124,3 +123,5 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+SESSION_COOKIE_AGE = 1800
