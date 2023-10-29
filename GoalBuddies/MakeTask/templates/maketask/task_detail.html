@@ -1,21 +1,49 @@
-<!-- task_detail.html -->
-<a href="{% url 'account' %}" class="btn btn-secondary">アカウントページに戻る</a>
-<h1>{{ task.name }}</h1>
-<p>{{ task.detail }}</p>
-<hr>
-<!-- メッセージの表示 -->
-<div>
-  <h2>メッセージ</h2>
-  {% for message in messages %}
-    <p><strong>{{ message.sender.username }}:</strong> {{ message.content }}</p>
-  {% endfor %}
-</div>
-<!-- メッセージ送信フォーム -->
-<div>
-  <h2>メッセージを送る</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ message_form.as_p }}
-    <button type="submit">送信</button>
-  </form>
-</div>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ task.name }}</title>
+    <!-- Bootstrap CSSのリンクを追加（必要な場合） -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- その他のスタイル（必要に応じて） -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .message-box {
+            background-color: #fff;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+        }
+        .message-form {
+            background-color: #fff;
+            padding: 15px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <a href="{% url 'account' %}" class="btn btn-secondary mb-3">アカウントページに戻る</a>
+    <h1>タスク名：{{ task.name }}</h1>
+    <p>詳細：{{ task.detail }}</p>
+    <hr>
+
+    <div class="message-box">
+        <h2>メッセージ</h2>
+        {% for message in messages %}
+            <p><strong>{{ message.sender.username }}:</strong> {{ message.content }}</p>
+        {% endfor %}
+    </div>
+
+    <div class="message-form">
+        <h2>メッセージを送る</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ message_form.as_p }}
+            <button type="submit" class="btn btn-primary">送信</button>
+        </form>
+    </div>
+</body>
+</html>

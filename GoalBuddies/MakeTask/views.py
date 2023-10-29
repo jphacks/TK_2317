@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .forms import TaskForm
-from .models import Task
+from .models import Task,Match
 from django.shortcuts import get_object_or_404, redirect
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Task, Message
@@ -12,19 +12,11 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def account_view(request):
     tasks = Task.objects.filter(user=request.user)
-    matching_tasks = []
-    if 'matching_tasks' in request.session:
-        matching_task_ids = request.session['matching_tasks']
-        matching_tasks = Task.objects.filter(id__in=matching_task_ids)
-
-        # セッションデータと取得したタスクの出力
-        print("Yes")
-        print("Session Matching Tasks IDs:", matching_task_ids)
-        print("Retrieved Matching Tasks:", matching_tasks)
+    matches = Match.objects.filter(task1__user=request.user) | Match.objects.filter(task2__user=request.user)
 
     return render(request, 'MakeTask/account.html', {
         'tasks': tasks,
-        'matching_tasks': matching_tasks
+        'matches': matches
     })
 
 @login_required
@@ -86,13 +78,10 @@ def task_detail_view(request, task_id):
 
 @login_required
 def match_task_view(request, task_id):
-    task = get_object_or_404(Task, id=task_id)
-    # 現在のユーザー以外のユーザーが持つ、同じ期間のタスクを検索
-    matching_tasks = Task.objects.filter(duration=task.duration).exclude(user=request.user)
-    # マッチングしたタスクのIDをセッションに保存
+    my_task = get_object_or_404(Task, id=task_id, user=request.user)
+    matching_tasks = Task.objects.filter(duration=my_task.duration).exclude(user=request.user)
 
-    print("Matching Tasks:", matching_tasks)
+    for task in matching_tasks:
+        Match.objects.create(task1=my_task, task2=task)
 
-    request.session['matching_tasks'] = [task.id for task in matching_tasks]
-    request.session.modified = True  # セッションの変更を強制的に保存
     return redirect('account')

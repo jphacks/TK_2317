@@ -29,3 +29,11 @@ class Message(models.Model):
 
     def __str__(self):
         return f'Message by {self.sender.username} for task {self.task.name}'
+    
+class Match(models.Model):
+    task1 = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='match_task1')
+    task2 = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='match_task2')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Match between {self.task1.name} and {self.task2.name}'
