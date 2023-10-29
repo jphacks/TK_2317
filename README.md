@@ -1,6 +1,6 @@
 # GoalBuddies
 
-[![IMAGE ALT TEXT HERE](https://jphacks.com/wp-content/uploads/2023/07/JPHACKS2023_ogp.png)](https://www.youtube.com/watch?v=yYRQEdfGjEg)
+<img width="733" alt="title" src="https://github.com/jphacks/TK_2317/assets/107740686/83a3a90a-9b59-4c0b-8926-4549d2b9b413">
 
 ### 動画
 [![YouTube](http://img.youtube.com/vi/YQWXJ6Og-V8/default.jpg)](https://youtu.be/YQWXJ6Og-V8)
