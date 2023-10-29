@@ -70,9 +70,28 @@
             <div>
                 <a href="{% url 'edit_task' task.id %}">Edit</a> |
                 <a href="{% url 'remove_task' task.id %}">Remove</a>
+                <a href="{% url 'match_task' task.id %}">マッチング</a>
+                <!-- 詳細ボタンの追加 -->
+                <a href="{% url 'task_detail' task.id %}">詳細</a>
             </div>
         </li>
         {% endfor %}
     </ul>
+    <div>
+        <h2>マッチングしたタスク</h2>
+        {% if matching_tasks %}
+          <ul>
+            {% for task in matching_tasks %}
+              <li>
+                {{ task.name }} - {{ task.duration }}日
+                <!-- 詳細ボタンの追加 -->
+                <a href="{% url 'task_detail' task.id %}" class="btn btn-info">詳細</a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p>マッチングしたタスクはありません。</p>
+        {% endif %}
+      </div>
 </body>
 </html>

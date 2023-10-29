@@ -1,33 +1,29 @@
-<!-- このファイルは新しく作成する必要があります -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Task Detail</title>
-    <!-- スタイルとヘッダー情報 -->
-</head>
-<body>
-    <h1>{{ task.name }}</h1>
-    <p>{{ task.detail }}</p>
-    
-    <!-- 投稿フォーム -->
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">投稿</button>
-    </form>
+<!-- task_detail.html -->
 
-    <!-- 投稿リスト -->
-    <ul>
-        {% for post in posts %}
-        <li>
-            <strong>{{ post.user.username }}</strong> ({{ post.posted_at }}): {{ post.content }}
-            <form method="post" action="{% url 'like_post' post.id %}">
-                {% csrf_token %}
-                <button type="submit">いいね</button>
-            </form>
-        </li>
-        {% endfor %}
-    </ul>
+<h1>{{ task.name }}</h1>
+<p>詳細: {{ task.detail }}</p>
+<p>期間: {{ task.duration }}日</p>
+<hr>
 
-</body>
-</html>
+<!-- メッセージの表示 -->
+<div>
+  <h2>メッセージ</h2>
+  {% for message in messages %}
+    <div>
+      <strong>{{ message.sender.username }}</strong>: {{ message.content }}
+      <span class="text-muted">{{ message.created_at|date:"Y-m-d H:i" }}</span>
+    </div>
+  {% empty %}
+    <p>メッセージはありません。</p>
+  {% endfor %}
+</div>
+
+<!-- メッセージ送信フォーム -->
+<div>
+  <h3>メッセージを送る</h3>
+  <form method="post">
+    {% csrf_token %}
+    {{ message_form.as_p }}
+    <button type="submit" class="btn btn-primary">送信</button>
+  </form>
+</div>
