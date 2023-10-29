@@ -63,9 +63,6 @@ def remove_task_view(request, task_id):
 @login_required
 def task_detail_view(request, task_id):
     task = get_object_or_404(Task, id=task_id)
-    if request.user != task.user and request.user not in task.matched_users.all():
-        return redirect('account')  # マッチングしていないユーザーはアクセスできない
-
     messages = task.messages.all()
     new_message = None
 
@@ -90,13 +87,12 @@ def task_detail_view(request, task_id):
 @login_required
 def match_task_view(request, task_id):
     task = get_object_or_404(Task, id=task_id)
+    # 現在のユーザー以外のユーザーが持つ、同じ期間のタスクを検索
     matching_tasks = Task.objects.filter(duration=task.duration).exclude(user=request.user)
-    
-    for matching_task in matching_tasks:
-        matching_task.matched_users.add(request.user)  # マッチングしたユーザーを追加
-        matching_task.save()
+    # マッチングしたタスクのIDをセッションに保存
 
-    task.matched_users.add(*[task.user for task in matching_tasks])  # 自分のタスクにマッチングしたユーザーを追加
-    task.save()
+    print("Matching Tasks:", matching_tasks)
 
+    request.session['matching_tasks'] = [task.id for task in matching_tasks]
+    request.session.modified = True  # セッションの変更を強制的に保存
     return redirect('account')

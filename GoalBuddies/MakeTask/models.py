@@ -13,7 +13,6 @@ class Task(models.Model):
     detail = models.TextField()
     duration = models.IntegerField()  # 日数で管理
     tags = models.CharField(max_length=50, choices=TAG_CHOICES)  # 選択肢で管理
-    matched_users = models.ManyToManyField(User, related_name='matched_tasks', blank=True)
 
 
 class Tag(models.Model):
